@@ -18,5 +18,15 @@ libraryDependencies ++= Seq(
   ("com.github.etaty" %% "rediscala" % "1.9.0")
     .exclude("com.typesafe.akka", "akka-actor")
 )
+--------------------------------------------------------
+libraryDependencies ++= Seq(
+  // your other deps...
+
+  ("com.github.etaty" %% "rediscala" % "1.9.0")
+    .excludeAll(
+      ExclusionRule(organization = "com.typesafe.akka")
+    )
+)
+
 
 ```
