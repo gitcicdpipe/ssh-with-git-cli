@@ -13,6 +13,8 @@ libraryDependencies ++= Seq(
   "org.scalacheck" %% "scalacheck" % "1.19.0" % Test,
   "com.typesafe.akka" %% "akka-stream-testkit" % "2.6.20" % Test,
   "com.typesafe.akka" %% "akka-http-testkit" % "10.2.10" % Test,
+  "io.lettuce" % "lettuce-core" % "6.5.4.RELEASE"
+
 
   ("com.github.etaty" %% "rediscala" % "1.9.0")
     .exclude("com.typesafe.akka", "akka-actor")
