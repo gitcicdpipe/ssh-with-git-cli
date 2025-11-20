@@ -8,57 +8,50 @@ enablePlugins(MinnaLibraryPlugin, GitVersioningPlugin)
 
 val cogsVersion = "28.4.0"
 
-// Force specific versions to resolve conflicts
-dependencyOverrides ++= Seq(
-  // Akka dependencies
+libraryDependencies ++= Seq(
+  // Explicitly declare the versions you want to use
   "com.typesafe.akka" %% "akka-actor" % "2.6.20",
   "com.typesafe.akka" %% "akka-stream" % "2.6.20",
   "com.typesafe.akka" %% "akka-http" % "10.2.10",
   "com.typesafe.akka" %% "akka-http-core" % "10.2.10",
-  
-  // Google Cloud dependencies
-  "com.google.api.grpc" % "proto-google-cloud-kms-v1" % "0.169.0",
-  "com.google.guava" % "guava" % "33.4.0-jre",
-  "com.google.j2objc" % "j2objc-annotations" % "3.0.0",
-  
-  // Play JSON
   "com.typesafe.play" %% "play-json" % "2.10.7",
-  
-  // SLF4J
+  "com.google.guava" % "guava" % "33.4.0-jre",
   "org.slf4j" % "slf4j-api" % "2.0.17",
+  "com.lihaoyi" %% "sourcecode" % "0.3.0",
+  "com.google.api.grpc" % "proto-google-cloud-kms-v1" % "0.169.0",
   
-  // Sourcecode
-  "com.lihaoyi" %% "sourcecode" % "0.3.0"
-)
-
-libraryDependencies ++= Seq(
+  // Your dependencies with exclusions
   ("tech.minna" %% "apigen-core" % "20.6.0")
     .excludeAll(
-      ExclusionRule(organization = "com.typesafe.akka", name = "akka-actor_2.13"),
-      ExclusionRule(organization = "com.typesafe.akka", name = "akka-stream_2.13"),
-      ExclusionRule(organization = "com.typesafe.play", name = "play-json_2.13"),
-      ExclusionRule(organization = "com.google.guava", name = "guava"),
-      ExclusionRule(organization = "org.slf4j", name = "slf4j-api")
+      ExclusionRule(organization = "com.typesafe.akka"),
+      ExclusionRule(organization = "com.typesafe.play"),
+      ExclusionRule(organization = "com.google.guava"),
+      ExclusionRule(organization = "com.google.api.grpc"),
+      ExclusionRule(organization = "org.slf4j"),
+      ExclusionRule(organization = "com.lihaoyi")
     ),
   
   ("tech.minna" %% "cogs" % cogsVersion)
     .excludeAll(
-      ExclusionRule(organization = "com.typesafe.akka", name = "akka-actor_2.13"),
-      ExclusionRule(organization = "com.typesafe.akka", name = "akka-stream_2.13"),
-      ExclusionRule(organization = "com.typesafe.akka", name = "akka-http_2.13"),
-      ExclusionRule(organization = "com.typesafe.play", name = "play-json_2.13"),
-      ExclusionRule(organization = "com.google.cloud", name = "google-cloud-kms"),
-      ExclusionRule(organization = "commons-codec", name = "commons-codec"),
-      ExclusionRule(organization = "org.slf4j", name = "slf4j-api"),
-      ExclusionRule(organization = "ch.qos.logback", name = "logback-classic"),
+      ExclusionRule(organization = "com.typesafe.akka"),
+      ExclusionRule(organization = "com.typesafe.play"),
+      ExclusionRule(organization = "com.google.guava"),
+      ExclusionRule(organization = "com.google.api.grpc"),
+      ExclusionRule(organization = "com.google.cloud"),
+      ExclusionRule(organization = "org.slf4j"),
+      ExclusionRule(organization = "ch.qos.logback"),
       ExclusionRule(organization = "com.fasterxml.jackson.core"),
-      ExclusionRule(organization = "com.fasterxml.jackson.datatype")
+      ExclusionRule(organization = "com.fasterxml.jackson.datatype"),
+      ExclusionRule(organization = "com.lihaoyi"),
+      ExclusionRule(organization = "commons-codec")
     ),
   
   ("tech.minna" %% "cogs-testkit" % cogsVersion % Test)
     .excludeAll(
-      ExclusionRule(organization = "com.typesafe.akka", name = "akka-actor_2.13"),
-      ExclusionRule(organization = "com.typesafe.akka", name = "akka-stream_2.13")
+      ExclusionRule(organization = "com.typesafe.akka"),
+      ExclusionRule(organization = "com.typesafe.play"),
+      ExclusionRule(organization = "com.google.guava"),
+      ExclusionRule(organization = "org.slf4j")
     ),
   
   "org.scalatest" %% "scalatest" % "3.2.19" % Test,
