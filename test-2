@@ -1,0 +1,67 @@
+✅ 1. Generate .dot file: target/configuration-dependencies.dot
+
+Install the sbt-dependency-graph plugin.
+
+project/plugins.sbt
+addSbtPlugin("net.virtual-void" % "sbt-dependency-graph" % "0.10.0-RC1")
+
+
+Then run:
+
+Generate DOT file
+sbt dependencyDot
+
+
+This produces:
+
+target/scala-2.xx/configuration-dependencies.dot
+
+
+If you want the full dependency graph including all configurations:
+
+sbt dependencyDot::compile
+sbt dependencyDot::test
+
+✅ 2. Show actual SBT graph including evicted dependencies
+
+To see evicted versions:
+
+Full tree with evictions
+sbt dependencyTree
+
+
+Or more verbose:
+
+sbt evicted
+
+
+Or show dependency tree with conflicts marked:
+
+sbt whatDependsOn <org> <artifact> <version>
+
+
+Example:
+
+sbt "whatDependsOn com.fasterxml.jackson.core jackson-databind 2.13.4"
+
+✅ 3. Generate BDIO file + Detect diagnostics log
+
+You need Black Duck Detect (Synopsys Detect).
+
+Run Detect (SBT mode)
+bash <(curl -s https://detect.synopsys.com/detect.sh) \
+  --detect.tools=SIGNATURE_SCAN \
+  --detect.project.name=my-project \
+  --detect.sbt.included.configurations=compile,test \
+  --detect.output.path=detect-output \
+  --detect.diagnostic=true \
+  --detect.bdio.output.path=detect-bdio
+
+Output generated:
+Artifact	Path
+BDIO file	detect-bdio/*.jsonld
+Diagnostics log	detect-output/diagnostic/*.zip
+Standard log	detect-output/runs/*.log
+
+The BDIO file is what Detect uploads to Black Duck server.
+The diagnostics ZIP contains logs, dependency graphs, configuration data, etc.
